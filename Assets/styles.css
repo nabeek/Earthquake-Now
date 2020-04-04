@@ -1,4 +1,9 @@
 /* Recent Seismic Section */
+#seismic-activity {
+    background-color: #FFF6EF;
+    border: 1px solid #2d4059;
+}
+
 .seismic-info {
     width: 50%;
 }
