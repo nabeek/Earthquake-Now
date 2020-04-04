@@ -1,3 +1,4 @@
+/* Mitch */
 .navbar {
     background: #2D4059;
 }
@@ -22,3 +23,13 @@
     font-size: 12px;
     color: grey;
 }
+
+/* Nick */
+section#related-news {
+    background-color: #2D4059;
+}
+
+.news-box {
+    background-color: #FFF6EF;
+};
+
