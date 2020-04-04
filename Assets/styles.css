@@ -1,0 +1,29 @@
+/* Recent Seismic Section */
+.activity-box {
+    display: flex;
+    width: 95%;
+}
+
+.seismic-info {
+    width: 50%;
+}
+
+.magnitude {
+    align-self: center;
+    text-align: right;
+    width: 50%;
+}
+
+.activity-high {
+    background-color: #ea5455;
+}
+
+.activity-med {
+    background-color: #F07b3f;
+}
+
+.activity-low {
+    background-color: #ffd460;
+}
+
+
