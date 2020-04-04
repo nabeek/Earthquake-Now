@@ -1,9 +1,4 @@
 /* Recent Seismic Section */
-.activity-box {
-    display: flex;
-    width: 95%;
-}
-
 .seismic-info {
     width: 50%;
 }
