@@ -1,3 +1,14 @@
+/* Body styling to sticky footer to bottom of page */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+    
+  #wrapper {
+    flex: 1;
+}
+
 /* Recent Seismic Section */
 #seismic-activity {
     background-color: #FFF6EF;

@@ -31,6 +31,15 @@
 
 //final styling
 
+
+let searchInputTerm = ""
+
+// Event listener on Search Button
+$('#search-button').on('click', function () {
+    searchInputTerm = $('#search-input').val()
+    console.log(searchInputTerm)
+})
+
 function getCoordinates() {
 
     searchInputTerm = searchInputTerm.split(" ").join("+");

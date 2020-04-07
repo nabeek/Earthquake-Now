@@ -14,26 +14,26 @@
 </head>
 
 <body>
-    <main class="container">
+    <main class="container" id="wrapper">
         <header class="navbar is-flex has-text-white is-size-3 centered">
             <h1>Earthquake Now</h1>
         </header>
 
         <section id="search-container" class="centered">
-            <div class="has-text-centered"> 
+            <div class="has-text-centered">
                 <label class="is-size-5">Enter A Location</label>
                 <div class="field has-addons is-marginless">
                     <p class="control">
-                    <input type="text" class="city-input input is-info">
+                        <input type="text" id="search-input" class="city-input input is-info">
                     </p>
-                    <p class="control"
-                    ><button id="search-button" type="submit" class="button is-danger"><i class="fas fa-search"></i></button>
+                    <p class="control"><button id="search-button" type="submit" class="button is-danger"><i
+                                class="fas fa-search"></i></button>
                     </p>
                 </div>
                 <p class="search-helper has-text-left">*City Name</p>
             </div>
         </section>
-        
+
         <!-- Wrapper to create columns on desktop -->
         <div class="columns is-desktop">
             <!-- Recent Seismic Section -->
@@ -105,6 +105,14 @@
             </section>
         </div>
     </main>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+            <strong>Earthquake Now</strong> was created by <a href="#">Mitch</a>, Nate, and Nick.
+          </p>
+        </div>
+      </footer>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
