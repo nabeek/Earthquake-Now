@@ -15,21 +15,29 @@
 
 <body>
     <main class="container">
-        <header>
+        <header class="navbar is-flex has-text-white is-size-3 centered">
             <h1>Earthquake Now</h1>
         </header>
 
-        <section id="search-container">
-            <form>
-                <h2>Enter A Location</h2>
-                <input type="text" class="city-input input">
-                <button id="search-button" type="submit"><i class="fas fa-search"></i></button>
-            </form>
+        <section id="search-container" class="centered">
+            <div class="has-text-centered"> 
+                <label class="is-size-5">Enter A Location</label>
+                <div class="field has-addons is-marginless">
+                    <p class="control">
+                    <input type="text" class="city-input input is-info">
+                    </p>
+                    <p class="control"
+                    ><button id="search-button" type="submit" class="button is-danger"><i class="fas fa-search"></i></button>
+                    </p>
+                </div>
+                <p class="search-helper has-text-left">*City Name</p>
+            </div>
         </section>
-
+        
         <!-- Recent Seismic Section -->
         <section id="seismic-activity" class="section column">
             <h3 class="title is-4 has-text-centered">Recent Seismic Activity</h3>
+
             <div class="box-container">
                 <div class="box activity-box activity-high is-flex">
                     <div class="seismic-info">
