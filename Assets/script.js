@@ -37,4 +37,33 @@ let searchInputTerm = ""
 $('#search-button').on('click', function () {
     searchInputTerm = $('#search-input').val()
     console.log(searchInputTerm)
+    printSeismicElements()
 })
+
+// Print seismic activity boxes
+function printSeismicElements() {
+    let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+    let newSeismicSubDiv = $('<div>').addClass('seismic-info')
+    let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
+    let newSeismicPLoc = $('<p>').addClass('date content is-size-6')
+    let newSeismicPDate = $('<p>').addClass('date content is-size-6')
+    let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
+
+    // *** add search tem location
+    newSeismicH4.text('Salt Lake City')
+    newSeismicSubDiv.append(newSeismicH4)
+    // *** add event location
+    newSeismicPLoc.text('72km WSW of Challis, Idaho')
+    newSeismicSubDiv.append(newSeismicPLoc)
+    // *** add event date & time
+    newSeismicPDate.text('3/31/2020 12:35 PM')
+    newSeismicSubDiv.append(newSeismicPDate)
+
+    newSeismicDiv.append(newSeismicSubDiv)
+
+    // *** add magnitude rating
+    newSeismicH5.text('5.8')
+    newSeismicDiv.append(newSeismicH5)
+
+    $('#seismic-container').append(newSeismicDiv)
+}
