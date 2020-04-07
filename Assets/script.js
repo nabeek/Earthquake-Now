@@ -23,6 +23,7 @@
 //if no recent siesmic activity
 //then show a no activity box
 
+
 //add footer
 //add News API attribution
 //link project members name's & githubs
