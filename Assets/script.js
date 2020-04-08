@@ -42,6 +42,9 @@ $('#search-button').on('click', function () {
 
 // Print seismic activity boxes
 function printSeismicElements() {
+    // reset seismic boxes
+    resetSeismicBoxes()
+
     let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
     let newSeismicSubDiv = $('<div>').addClass('seismic-info')
     let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
@@ -66,4 +69,11 @@ function printSeismicElements() {
     newSeismicDiv.append(newSeismicH5)
 
     $('#seismic-container').append(newSeismicDiv)
+}
+
+// Reset seismic activity boxes
+function resetSeismicBoxes() {
+    if ($('#seismic-container').has('div')) {
+        $('#seismic-container > div').remove()
+    }
 }
