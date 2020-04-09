@@ -62,7 +62,7 @@ function getSeismicData(lat, lon) {
         // reset seismic boxes
         resetSeismicBoxes()
 
-        $('#near').html('<p>Near ' + searchInputTerm + '</p>')
+        $('#near').html('<p>Search Results For ' + searchInputTerm + '</p>')
 
         let dataArray = response.features
 
