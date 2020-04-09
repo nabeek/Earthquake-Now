@@ -1,18 +1,18 @@
-//add event listener for search button to capture input value
-//assign to variable
-
-//make api call to get geocode lat & lon
-
 let searchInputTerm = ""
-let lat = ""
-let lon = ""
+let searchLocation = ""
+
+init()
 
 // Event listener on Search Button
 $('#search-button').on('click', function () {
-    searchInputTerm = $('#search-input').val().trim().toLowerCase()
-    console.log(searchInputTerm)
+    if ($('#search-input').val() === "") {
+        return
+    } else {
+        searchInputTerm = $('#search-input').val().trim().toLowerCase()
+    }
 
     getCoordinates()
+    storeLocation()
 })
 
 function getCoordinates() {
@@ -26,8 +26,8 @@ function getCoordinates() {
 
         // Pull top response in the API response
         var response = response[0];
-        lat = response.lat;
-        lon = response.lon;
+        let lat = response.lat;
+        let lon = response.lon;
 
         getSeismicData(lat, lon)
     }).catch(function (error) {
@@ -74,7 +74,6 @@ function getSeismicData(lat, lon) {
             let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
             let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
 
-
             newSeismicH4.text(response.features[i].properties.place)
             newSeismicSubDiv.append(newSeismicH4)
 
@@ -82,7 +81,6 @@ function getSeismicData(lat, lon) {
             newSeismicSubDiv.append(newSeismicPDate)
 
             newSeismicDiv.append(newSeismicSubDiv)
-
 
             newSeismicH5.text(response.features[i].properties.mag)
             newSeismicDiv.append(newSeismicH5)
@@ -92,6 +90,24 @@ function getSeismicData(lat, lon) {
     }).catch(function (error) {
         console.log(error)
     });
+}
+
+// retreive previous search from local storage
+function init() {
+    let storedLocation = localStorage.getItem('searchLocation')
+    let parsedLocation = JSON.parse(storedLocation)
+
+    if (parsedLocation != null) {
+        searchInputTerm = parsedLocation
+        getCoordinates()
+    } else {
+        searchInputTerm = ""
+    }
+}
+
+// save search to local storage
+function storeLocation() {
+    localStorage.setItem('searchLocation', JSON.stringify(searchInputTerm))
 }
 
 // Reset seismic activity boxes
