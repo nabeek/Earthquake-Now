@@ -74,6 +74,15 @@ function getSeismicData(lat, lon) {
             let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
             let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
 
+            // Color code event box based on magnitude value
+            if (response.features[i].properties.mag >= 7.0) {
+                newSeismicDiv.addClass("activity-high");
+            } else if (response.features[i].properties.mag >= 5.0 && response.features[i].properties.mag < 7.0) {
+                newSeismicDiv.addClass("activity-med");
+            } else if (response.features[i].properties.mag < 5.0) {
+                newSeismicDiv.addClass("activity-low");
+            };
+
             newSeismicH4.text(response.features[i].properties.place)
             newSeismicSubDiv.append(newSeismicH4)
 
