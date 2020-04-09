@@ -58,6 +58,7 @@ function getSeismicData(lat, lon) {
         url: queryURLUSGS,
         method: "GET"
     }).then(function (response) {
+        console.log(response)
         // reset seismic boxes
         resetSeismicBoxes()
 
@@ -79,7 +80,7 @@ function getSeismicData(lat, lon) {
                 newSeismicDiv.addClass("activity-high");
             } else if (response.features[i].properties.mag >= 5.0 && response.features[i].properties.mag < 7.0) {
                 newSeismicDiv.addClass("activity-med");
-            } else if (response.features[i].properties.mag < 5.0){
+            } else if (response.features[i].properties.mag < 5.0) {
                 newSeismicDiv.addClass("activity-low");
             };
 
