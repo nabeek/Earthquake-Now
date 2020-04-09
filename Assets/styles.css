@@ -5,9 +5,18 @@ body {
     flex-direction: column;
 }
     
-  #wrapper {
+#wrapper {
     flex: 1;
     margin-bottom: 48px;
+}
+
+/* Header-specfic styling */
+
+header {
+    margin: auto;
+    max-width: 1368px;
+    padding: 1em;
+    width: 100%;
 }
 
 /* Recent Seismic Section */
@@ -76,7 +85,11 @@ section#related-news {
     color: grey;
 }
 
+/* Footer-specific styling */
 .footer {
     background-color: #ebebeb;
+    margin: auto;
+    max-width: 1368px;
     padding: 3rem 1.5rem 3rem;
+    width: 100%;
 }

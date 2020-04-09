@@ -102,3 +102,5 @@ function resetSeismicBoxes() {
     }
 }
 
+// Auto-update copyright year
+$("#copyright-year").text(moment().format("YYYY"))
