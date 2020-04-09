@@ -16,14 +16,18 @@ body {
     border: 1px solid #2d4059;
 }
 
+#near p {
+    text-transform: capitalize;
+}
+
 .seismic-info {
-    width: 50%;
+    width: 70%;
 }
 
 .magnitude {
     align-self: center;
     text-align: right;
-    width: 50%;
+    width: 30%;
 }
 
 .activity-high {

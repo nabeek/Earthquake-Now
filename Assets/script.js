@@ -61,17 +61,19 @@ function getSeismicData(lat, lon) {
         // reset seismic boxes
         resetSeismicBoxes()
 
+        $('#near').html('<p>Near ' + searchInputTerm + '</p>')
+
         let dataArray = response.features
 
         for (let i = 0; i < dataArray.length; i++) {
-            console.log(response.features[i].properties.place)
+
             let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
             let newSeismicSubDiv = $('<div>').addClass('seismic-info')
             let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
-            // let newSeismicPLoc = $('<p>').addClass('date content is-size-6')
             let newSeismicPDate = $('<p>').addClass('date content is-size-6')
             let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
             let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
+
 
             newSeismicH4.text(response.features[i].properties.place)
             newSeismicSubDiv.append(newSeismicH4)
@@ -96,6 +98,7 @@ function getSeismicData(lat, lon) {
 function resetSeismicBoxes() {
     if ($('#seismic-container').has('div')) {
         $('#seismic-container > div').remove()
+        $('#near > p').remove()
     }
 }
 
