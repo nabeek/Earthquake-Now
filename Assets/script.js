@@ -60,3 +60,34 @@ $.ajax({
 //copyright with a moment date
 
 //final styling
+
+
+let searchInputTerm = ""
+
+// Event listener on Search Button
+$('#search-button').on('click', function () {
+    searchInputTerm = $('#search-input').val()
+    console.log(searchInputTerm)
+})
+
+function getCoordinates() {
+
+    searchInputTerm = searchInputTerm.split(" ").join("+");
+
+    var queryURL = "https://us1.locationiq.com/v1/search.php?key=5506fbb5d84090&q=" + searchInputTerm + "&format=json";
+
+    $.ajax ({
+        url: queryURL,
+        method: "GET"
+        }).then(function(response) {
+
+            console.log(response)
+     
+            var response = response[0];         // Pull top response in the API response
+            var lat = response.lat;
+            var lon = response.lon;
+
+            console.log(lat);
+            console.log(lon);
+        })
+};
