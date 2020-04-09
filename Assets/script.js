@@ -2,11 +2,41 @@
 //assign to variable
 
 //make api call to get geocode lat & lon
+
 //use lat & lon to make new api call to USGS API
+var startTime = moment().format("YYYY-MM-DD");
+var endTime = moment().add(1, "days").format("YYYY-MM-DD");
+var longitude = "-112"; //get lon from geocode
+var latitude = "40"; //get lat from geocode
+var maxRadius = "180";
+var magnitude = "";
+var minMag = 3;
+var limit = 10;
+var queryURL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson"
++"&starttime="+startTime
++"&endtime="+endTime
++"&longitude="+longitude
++"&latitude="+latitude
++"&maxradius="+maxRadius
++"&orderby=time"
++"&minmagnitude="+minMag
++"&limit="+limit;
+
+$.ajax({
+    url : queryURL,
+    method : "GET"
+}).then(function(response){
+    //set mag variable
+    magnitude = response.features[0].properties.mag;
+    //set actual date & time
+    console.log(response);
+}).catch();
+
 //define parameters we'll use for distance from searched area 
 //maybe use a dropdown selector with distance options
 
 //color code magnitude based on severity
+
 
 //format date & time with moment.js
 
