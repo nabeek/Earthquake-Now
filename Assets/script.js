@@ -9,16 +9,13 @@ let lon = ""
 
 // Event listener on Search Button
 $('#search-button').on('click', function () {
-    searchInputTerm = $('#search-input').val().trim()
+    searchInputTerm = $('#search-input').val().trim().toLowerCase()
     console.log(searchInputTerm)
 
     getCoordinates()
-    // printSeismicElements()
 })
 
 function getCoordinates() {
-
-    // ssearchInputTerm = searchInputTerm.split(" ").join("+");
 
     var queryURLGeo = "https://us1.locationiq.com/v1/search.php?key=5506fbb5d84090&q=" + searchInputTerm + "&format=json";
 
@@ -27,7 +24,8 @@ function getCoordinates() {
         method: "GET"
     }).then(function (response) {
 
-        var response = response[0];         // Pull top response in the API response
+        // Pull top response in the API response
+        var response = response[0];
         lat = response.lat;
         lon = response.lon;
 
@@ -56,61 +54,51 @@ function getSeismicData(lat, lon) {
         + "&minmagnitude=" + minMag
         + "&limit=" + limit;
 
-    console.log(queryURLUSGS)
-
     $.ajax({
         url: queryURLUSGS,
         method: "GET"
     }).then(function (response) {
-        console.log(response)
-        //set mag variable
-        magnitude = response.features[0].properties.mag;
-        //set actual date & time
-        console.log(response);
+        // reset seismic boxes
+        resetSeismicBoxes()
+
+        $('#near').html('<p>Near ' + searchInputTerm + '</p>')
+
+        let dataArray = response.features
+
+        for (let i = 0; i < dataArray.length; i++) {
+
+            let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+            let newSeismicSubDiv = $('<div>').addClass('seismic-info')
+            let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
+            let newSeismicPDate = $('<p>').addClass('date content is-size-6')
+            let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
+            let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
 
 
+            newSeismicH4.text(response.features[i].properties.place)
+            newSeismicSubDiv.append(newSeismicH4)
+
+            newSeismicPDate.text(eventTime)
+            newSeismicSubDiv.append(newSeismicPDate)
+
+            newSeismicDiv.append(newSeismicSubDiv)
 
 
+            newSeismicH5.text(response.features[i].properties.mag)
+            newSeismicDiv.append(newSeismicH5)
+
+            $('#seismic-container').append(newSeismicDiv)
+        }
     }).catch(function (error) {
         console.log(error)
     });
-}
-
-// Print seismic activity boxes
-function printSeismicElements() {
-    // reset seismic boxes
-    resetSeismicBoxes()
-
-    let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
-    let newSeismicSubDiv = $('<div>').addClass('seismic-info')
-    let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
-    let newSeismicPLoc = $('<p>').addClass('date content is-size-6')
-    let newSeismicPDate = $('<p>').addClass('date content is-size-6')
-    let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
-
-    // *** add search tem location
-    newSeismicH4.text('Salt Lake City')
-    newSeismicSubDiv.append(newSeismicH4)
-    // *** add event location
-    newSeismicPLoc.text('72km WSW of Challis, Idaho')
-    newSeismicSubDiv.append(newSeismicPLoc)
-    // *** add event date & time
-    newSeismicPDate.text('3/31/2020 12:35 PM')
-    newSeismicSubDiv.append(newSeismicPDate)
-
-    newSeismicDiv.append(newSeismicSubDiv)
-
-    // *** add magnitude rating
-    newSeismicH5.text('5.8')
-    newSeismicDiv.append(newSeismicH5)
-
-    $('#seismic-container').append(newSeismicDiv)
 }
 
 // Reset seismic activity boxes
 function resetSeismicBoxes() {
     if ($('#seismic-container').has('div')) {
         $('#seismic-container > div').remove()
+        $('#near > p').remove()
     }
 }
 
