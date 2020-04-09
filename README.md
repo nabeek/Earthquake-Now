@@ -26,8 +26,10 @@ Enter project description here
 
 #### Technologies
 
-- Technology 1
-- Technology 2
+- Javacript & jQuery
+- Bulma Framework
+- HTML 5
+- CSS 3
 
 ---
 
@@ -35,7 +37,7 @@ Enter project description here
 
 #### Installation
 
-#### API Reference
+#### Code Samples
 
 ```html
 <p>dummy code</p>
@@ -47,13 +49,17 @@ Enter project description here
 
 ## References
 
+- Geocode API
+- NewsAPI
+- USGS API
+
 [Back To The Top](#project-name)
 
 ---
 
 ## License
 
-Copyright (c) [2020][nate valline]
+Copyright (c) 2020
 
 [Back To The Top](#project-name)
 
@@ -61,7 +67,9 @@ Copyright (c) [2020][nate valline]
 
 ## Contributors
 
+- Mitch Henderson
 - Nate Valline
+- Nick Beekhuizen
 
 [Back To The Top](#project-name)
 
