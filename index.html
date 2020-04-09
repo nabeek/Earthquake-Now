@@ -14,11 +14,11 @@
 </head>
 
 <body>
-    <main class="container" id="wrapper">
-        <header class="navbar is-flex has-text-white is-size-3 centered">
-            <h1>Earthquake Now</h1>
-        </header>
+    <header class="navbar is-flex has-text-white is-size-3 centered">
+        <h1>Earthquake Now</h1>
+    </header>
 
+    <main class="container" id="wrapper">
         <section id="search-container" class="centered">
             <div class="has-text-centered">
                 <label class="is-size-5">Enter A Location</label>
@@ -39,6 +39,7 @@
             <!-- Recent Seismic Section -->
             <section id="seismic-activity" class="section column">
                 <h3 class="title is-4 has-text-centered">Recent Seismic Activity</h3>
+                <div id="near" class="subtitle has-text-centered"></div>
 
                 <div id="seismic-container" class="box-container">
                     <div class="box activity-box activity-high is-flex">
@@ -112,7 +113,7 @@
                 <a href="https://github.com/nabeek" target="_blank">Nick Beekhuizen</a>
                 <br>
                 <br>
-                <small>Copyright &copy; 2020</small>
+                <small>Copyright &copy; <span id="copyright-year"></span></small>
         </div>
     </footer>
 

@@ -1,24 +1,24 @@
-//add event listener for search button to capture input value
-//assign to variable
-
-//make api call to get geocode lat & lon
-
 let searchInputTerm = ""
-let lat = ""
-let lon = ""
+let searchLocation = ""
+
+init()
 
 // Event listener on Search Button
 $('#search-button').on('click', function () {
-    searchInputTerm = $('#search-input').val().trim()
+
+    if ($('#search-input').val() === "") {
+        return
+    } else {
+        searchInputTerm = $('#search-input').val().trim().toLowerCase()
+    }
 
     getCoordinates()
     getNewsArticles();
-    // printSeismicElements()
+    storeLocation()
+
 })
 
 function getCoordinates() {
-
-    // ssearchInputTerm = searchInputTerm.split(" ").join("+");
 
     var queryURLGeo = "https://us1.locationiq.com/v1/search.php?key=5506fbb5d84090&q=" + searchInputTerm + "&format=json";
 
@@ -27,9 +27,10 @@ function getCoordinates() {
         method: "GET"
     }).then(function (response) {
 
-        var response = response[0];         // Pull top response in the API response
-        lat = response.lat;
-        lon = response.lon;
+        // Pull top response in the API response
+        var response = response[0];
+        let lat = response.lat;
+        let lon = response.lon;
 
         getSeismicData(lat, lon)
     }).catch(function (error) {
@@ -60,52 +61,79 @@ function getSeismicData(lat, lon) {
         url: queryURLUSGS,
         method: "GET"
     }).then(function (response) {
+
         console.log("USGS :");
         console.log(response);
         //set mag variable
         magnitude = response.features[0].properties.mag;
         //set actual date & time
 
+        // reset seismic boxes
+        resetSeismicBoxes()
+
+        $('#near').html('<p>Near ' + searchInputTerm + '</p>')
+
+        let dataArray = response.features
+
+        for (let i = 0; i < dataArray.length; i++) {
+
+            let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+            let newSeismicSubDiv = $('<div>').addClass('seismic-info')
+            let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
+            let newSeismicPDate = $('<p>').addClass('date content is-size-6')
+            let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
+            let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
+
+            // Color code event box based on magnitude value
+            if (response.features[i].properties.mag >= 7.0) {
+                newSeismicDiv.addClass("activity-high");
+            } else if (response.features[i].properties.mag >= 5.0 && response.features[i].properties.mag < 7.0) {
+                newSeismicDiv.addClass("activity-med");
+            } else if (response.features[i].properties.mag < 5.0) {
+                newSeismicDiv.addClass("activity-low");
+            };
+
+            newSeismicH4.text(response.features[i].properties.place)
+            newSeismicSubDiv.append(newSeismicH4)
+
+            newSeismicPDate.text(eventTime)
+            newSeismicSubDiv.append(newSeismicPDate)
+
+            newSeismicDiv.append(newSeismicSubDiv)
+
+            newSeismicH5.text(response.features[i].properties.mag)
+            newSeismicDiv.append(newSeismicH5)
+
+            $('#seismic-container').append(newSeismicDiv)
+        }
     }).catch(function (error) {
         console.log(error)
     });
 }
 
-// Print seismic activity boxes
-function printSeismicElements() {
-    // reset seismic boxes
-    resetSeismicBoxes()
+// retreive previous search from local storage
+function init() {
+    let storedLocation = localStorage.getItem('searchLocation')
+    let parsedLocation = JSON.parse(storedLocation)
 
-    let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
-    let newSeismicSubDiv = $('<div>').addClass('seismic-info')
-    let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
-    let newSeismicPLoc = $('<p>').addClass('date content is-size-6')
-    let newSeismicPDate = $('<p>').addClass('date content is-size-6')
-    let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
+    if (parsedLocation != null) {
+        searchInputTerm = parsedLocation
+        getCoordinates()
+    } else {
+        searchInputTerm = ""
+    }
+}
 
-    // *** add search tem location
-    newSeismicH4.text('Salt Lake City')
-    newSeismicSubDiv.append(newSeismicH4)
-    // *** add event location
-    newSeismicPLoc.text('72km WSW of Challis, Idaho')
-    newSeismicSubDiv.append(newSeismicPLoc)
-    // *** add event date & time
-    newSeismicPDate.text('3/31/2020 12:35 PM')
-    newSeismicSubDiv.append(newSeismicPDate)
-
-    newSeismicDiv.append(newSeismicSubDiv)
-
-    // *** add magnitude rating
-    newSeismicH5.text('5.8')
-    newSeismicDiv.append(newSeismicH5)
-
-    $('#seismic-container').append(newSeismicDiv)
+// save search to local storage
+function storeLocation() {
+    localStorage.setItem('searchLocation', JSON.stringify(searchInputTerm))
 }
 
 // Reset seismic activity boxes
 function resetSeismicBoxes() {
     if ($('#seismic-container').has('div')) {
         $('#seismic-container > div').remove()
+        $('#near > p').remove()
     }
 }
 
@@ -146,3 +174,7 @@ function getNewsArticles() {
         console.log(error)
     });
 }
+
+// Auto-update copyright year
+$("#copyright-year").text(moment().format("YYYY"))
+
