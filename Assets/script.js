@@ -21,7 +21,7 @@ $('#search-button').on('click', function () {
 
 })
 //search with ENTER
-$("#search-input").on("keyup", function(event) {
+$("#search-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
         $("#search-button").click();
     }
@@ -73,21 +73,21 @@ function getSeismicData(lat, lon) {
         url: queryURLUSGS,
         method: "GET"
     }).then(function (response) {
-        console.log(response)
         // reset seismic boxes
         resetSeismicBoxes()
 
-        $('#near').html('<p>Search Results for ' + searchInputTerm + '</p>')
+        $('#near').html('<p>Search Results for ' + searchInputTerm + ', ' + stateInput + '</p>')
 
         let dataArray = response.features
 
+        let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+        let newSeismicSubDiv = $('<div>').addClass('seismic-info')
+        let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
+        let newSeismicPDate = $('<p>').addClass('date content is-size-6')
+        let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
+
         for (let i = 0; i < dataArray.length; i++) {
 
-            let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
-            let newSeismicSubDiv = $('<div>').addClass('seismic-info')
-            let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
-            let newSeismicPDate = $('<p>').addClass('date content is-size-6')
-            let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
             let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
 
             // Color code event box based on magnitude value
@@ -103,13 +103,41 @@ function getSeismicData(lat, lon) {
             let seismicLocation = ((response.features[i].properties.place).split("km")[1])          // Stores cardinal direction
             newSeismicH4.text(seismicDistance.toFixed(1) + " mi " + seismicLocation)
             newSeismicSubDiv.append(newSeismicH4)
+        }
 
-            newSeismicPDate.text(eventTime)
-            newSeismicSubDiv.append(newSeismicPDate)
+        if (dataArray.length > 0) {
+
+            for (let i = 0; i < dataArray.length; i++) {
+                let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
+
+                // Color code event box based on magnitude value
+                if (response.features[i].properties.mag >= 7.0) {
+                    newSeismicDiv.addClass("activity-high");
+                } else if (response.features[i].properties.mag >= 5.0 && response.features[i].properties.mag < 7.0) {
+                    newSeismicDiv.addClass("activity-med");
+                } else if (response.features[i].properties.mag < 5.0) {
+                    newSeismicDiv.addClass("activity-low");
+                };
+
+                newSeismicH4.text(response.features[i].properties.place)
+                newSeismicSubDiv.append(newSeismicH4)
+
+                newSeismicPDate.text(eventTime)
+                newSeismicSubDiv.append(newSeismicPDate)
+
+                newSeismicDiv.append(newSeismicSubDiv)
+
+                newSeismicH5.text(response.features[i].properties.mag)
+                newSeismicDiv.append(newSeismicH5)
+
+                $('#seismic-container').append(newSeismicDiv)
+            }
+        } else {
+            newSeismicH4.text('No Recent Activity Found')
+            newSeismicSubDiv.append(newSeismicH4)
+            newSeismicH5.text('-.--')
 
             newSeismicDiv.append(newSeismicSubDiv)
-
-            newSeismicH5.text(response.features[i].properties.mag)
             newSeismicDiv.append(newSeismicH5)
 
             $('#seismic-container').append(newSeismicDiv)
@@ -155,10 +183,6 @@ function getNewsArticles() {
         + "?q=earthquake+" + searchTerm
         + "&apiKey=" + apikey;
 
-    console.log(queryURLNewsAPI)
-    console.log(searchTerm)
-
-
     $.ajax({
         url: queryURLNewsAPI,
         method: "GET"
@@ -180,6 +204,7 @@ function getNewsArticles() {
 
     }).catch(function (error) {
         console.log(error)
+
     });
 }
 
