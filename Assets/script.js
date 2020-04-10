@@ -87,7 +87,9 @@ function getSeismicData(lat, lon) {
                 newSeismicDiv.addClass("activity-low");
             };
 
-            newSeismicH4.text(response.features[i].properties.place)
+            let seismicDistance = parseInt((response.features[i].properties.place).split("km")[0]) * 0.621371          // Calculates km to miles
+            let seismicLocation = ((response.features[i].properties.place).split("km")[1])          // Stores cardinal direction
+            newSeismicH4.text(seismicDistance.toFixed(1) + " mi " + seismicLocation)
             newSeismicSubDiv.append(newSeismicH4)
 
             newSeismicPDate.text(eventTime)
