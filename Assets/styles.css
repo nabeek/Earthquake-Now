@@ -75,14 +75,9 @@ section#related-news {
     margin-bottom: 20px;
 }
 
-<<<<<<< HEAD
 /* Search Input Styling */
-#search-button, #state-selector {
-=======
 #search-button {
     border-radius: 4px;
->>>>>>> master
-    margin-left: 10px;
 }
 
 .city-input {
