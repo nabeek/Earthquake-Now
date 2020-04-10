@@ -15,6 +15,7 @@ $('#search-button').on('click', function () {
         stateInput = $('#state-input option:selected').val()
     }
 
+    changeLayout()
     getCoordinates()
     getNewsArticles();
     storeLocation()
@@ -22,13 +23,13 @@ $('#search-button').on('click', function () {
 })
 
 // Search with ENTER
-$("#search-input").on("keyup", function(event) {
+$("#search-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
         $("#search-button").click();
     }
 })
 
-$("#state-input").on("keyup", function(event) {
+$("#state-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
         $("#search-button").click();
     }
@@ -87,35 +88,21 @@ function getSeismicData(lat, lon) {
 
         let dataArray = response.features
 
-        let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
-        let newSeismicSubDiv = $('<div>').addClass('seismic-info')
-        let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
-        let newSeismicPDate = $('<p>').addClass('date content is-size-6')
-        let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
-
-        for (let i = 0; i < dataArray.length; i++) {
-
-            let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
-
-            // Color code event box based on magnitude value
-            if (response.features[i].properties.mag >= 7.0) {
-                newSeismicDiv.addClass("activity-high");
-            } else if (response.features[i].properties.mag >= 5.0 && response.features[i].properties.mag < 7.0) {
-                newSeismicDiv.addClass("activity-med");
-            } else if (response.features[i].properties.mag < 5.0) {
-                newSeismicDiv.addClass("activity-low");
-            };
-
-            let seismicDistance = parseInt((response.features[i].properties.place).split("km")[0]) * 0.621371          // Calculates km to miles
-            let seismicLocation = ((response.features[i].properties.place).split("km")[1])          // Stores cardinal direction
-            newSeismicH4.text(seismicDistance.toFixed(1) + " mi " + seismicLocation)
-            newSeismicSubDiv.append(newSeismicH4)
-        }
+        let newSeismicDiv
+        let newSeismicSubDiv
+        let newSeismicH4
+        let newSeismicPDate
+        let newSeismicH5
 
         if (dataArray.length > 0) {
 
             for (let i = 0; i < dataArray.length; i++) {
-                let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
+                newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+                newSeismicSubDiv = $('<div>').addClass('seismic-info')
+                newSeismicH4 = $('<h4>').addClass('city-name title is-4')
+                newSeismicPDate = $('<p>').addClass('date content is-size-6')
+                newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
+                eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
 
                 // Color code event box based on magnitude value
                 if (response.features[i].properties.mag >= 7.0) {
@@ -126,6 +113,7 @@ function getSeismicData(lat, lon) {
                     newSeismicDiv.addClass("activity-low");
                 };
 
+                // Update content & append elements
                 newSeismicH4.text(response.features[i].properties.place)
                 newSeismicSubDiv.append(newSeismicH4)
 
@@ -138,8 +126,21 @@ function getSeismicData(lat, lon) {
                 newSeismicDiv.append(newSeismicH5)
 
                 $('#seismic-container').append(newSeismicDiv)
+
+                // Calculates km to miles
+                let seismicDistance = parseInt((response.features[i].properties.place).split("km")[0]) * 0.621371
+                // Stores cardinal direction       
+                let seismicLocation = ((response.features[i].properties.place).split("km")[1])
+                newSeismicH4.text(seismicDistance.toFixed(1) + "mi " + seismicLocation)
+                newSeismicSubDiv.prepend(newSeismicH4)
+
             }
         } else {
+            newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+            newSeismicSubDiv = $('<div>').addClass('seismic-info')
+            newSeismicH4 = $('<h4>').addClass('city-name title is-4')
+            newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
+
             newSeismicH4.text('No Recent Activity Found')
             newSeismicSubDiv.append(newSeismicH4)
             newSeismicH5.text('-.--')
@@ -152,33 +153,6 @@ function getSeismicData(lat, lon) {
     }).catch(function (error) {
         console.log(error)
     });
-}
-
-// retreive previous search from local storage
-function init() {
-    let storedLocation = localStorage.getItem('searchLocation')
-    let parsedLocation = JSON.parse(storedLocation)
-
-    if (parsedLocation != null) {
-        searchInputTerm = parsedLocation
-        getCoordinates()
-        getNewsArticles()
-    } else {
-        searchInputTerm = ""
-    }
-}
-
-// save search to local storage
-function storeLocation() {
-    localStorage.setItem('searchLocation', JSON.stringify(searchInputTerm))
-}
-
-// Reset seismic activity boxes
-function resetSeismicBoxes() {
-    if ($('#seismic-container').has('div')) {
-        $('#seismic-container > div').remove()
-        $('#near > p').remove()
-    }
 }
 
 //get news articles API
@@ -211,10 +185,42 @@ function getNewsArticles() {
 
     }).catch(function (error) {
         console.log(error)
-
     });
 }
 
-// Auto-update copyright year
+// retreive previous search from local storage
+function init() {
+    let storedLocation = localStorage.getItem('searchLocation')
+    let parsedLocation = JSON.parse(storedLocation)
 
+    if (parsedLocation != null) {
+        searchInputTerm = parsedLocation
+        changeLayout()
+        getCoordinates()
+        getNewsArticles()
+    } else {
+        searchInputTerm = ""
+    }
+}
+
+// save search to local storage
+function storeLocation() {
+    localStorage.setItem('searchLocation', JSON.stringify(searchInputTerm))
+}
+
+function changeLayout() {
+    $('#welcome').addClass('hide')
+    $('#initialState').removeClass('hide')
+}
+
+// Reset seismic activity boxes
+function resetSeismicBoxes() {
+    if ($('#seismic-container').has('div')) {
+        $('#seismic-container > div').remove()
+        $('#near > p').remove()
+    }
+}
+
+// Auto-update copyright year
 $("#copyright-year").text(moment().format("YYYY"))
+
