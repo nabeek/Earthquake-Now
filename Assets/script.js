@@ -5,6 +5,7 @@ init()
 
 // Event listener on Search Button
 $('#search-button').on('click', function () {
+
     if ($('#search-input').val() === "") {
         return
     } else {
@@ -12,7 +13,9 @@ $('#search-button').on('click', function () {
     }
 
     getCoordinates()
+    getNewsArticles();
     storeLocation()
+
 })
 
 function getCoordinates() {
@@ -58,6 +61,13 @@ function getSeismicData(lat, lon) {
         url: queryURLUSGS,
         method: "GET"
     }).then(function (response) {
+
+        console.log("USGS :");
+        console.log(response);
+        //set mag variable
+        magnitude = response.features[0].properties.mag;
+        //set actual date & time
+
         // reset seismic boxes
         resetSeismicBoxes()
 
@@ -127,5 +137,44 @@ function resetSeismicBoxes() {
     }
 }
 
+//get news articles API
+function getNewsArticles() {
+    var apikey = "471254efa5b94cdd9aa11434a2d472f4";
+    var countryCode = "us"; //get country code from USGS response
+    var searchTerm = searchInputTerm.replace(/ /g, "+");
+    var queryURLNewsAPI = "https://newsapi.org/v2/everything"
+    +"?q=earthquake+"+searchTerm
+    +"&apiKey="+apikey;
+    
+    console.log(queryURLNewsAPI)
+    console.log(searchTerm)
+
+
+    $.ajax({
+        url: queryURLNewsAPI,
+        method: "GET"
+    }).then(function (response) {
+        console.log("NewsAPI :");
+        console.log(response);
+
+        //print articles to HTML
+        for (var i = 0; i < 3; i++) {
+            console.log(response.articles[i])
+            var headline = response.articles[i].title;
+            var date = moment(response.articles[i].publishedAt).calendar();
+            var source = response.articles[i].source.name;
+            var content = response.articles[i].description;
+
+            $("#title"+i).text(headline);
+            $("#date"+i).text(date+" - "+source);
+            $("#content"+i).text(content);
+        }
+
+    }).catch(function (error) {
+        console.log(error)
+    });
+}
+
 // Auto-update copyright year
 $("#copyright-year").text(moment().format("YYYY"))
+

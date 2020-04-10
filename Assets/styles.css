@@ -60,6 +60,10 @@ section#related-news {
     background-color: #FFF6EF;
 }
 
+.date {
+    margin-bottom: 10px;
+}
+
 .navbar {
     background: #2D4059;
 }
