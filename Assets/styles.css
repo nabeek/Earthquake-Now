@@ -75,12 +75,20 @@ section#related-news {
     margin-bottom: 20px;
 }
 
+/* Search Input Styling */
 #search-button {
-    margin-left: 10px;
+    border-radius: 4px;
 }
 
 .city-input {
     background-color: #ebebeb;
+}
+
+#state-input {
+    background-color: #ebebeb;
+    border-color: #3298dc;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
 
 .search-helper {
