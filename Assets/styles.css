@@ -76,11 +76,19 @@ section#related-news {
 }
 
 #search-button {
+    border-radius: 4px;
     margin-left: 10px;
 }
 
 .city-input {
     background-color: #ebebeb;
+}
+
+#state-input {
+    background-color: #ebebeb;
+    border-color: #3298dc;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
 
 .search-helper {

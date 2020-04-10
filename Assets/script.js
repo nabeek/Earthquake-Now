@@ -1,4 +1,5 @@
 let searchInputTerm = ""
+let stateInput = ""
 let searchLocation = ""
 
 init()
@@ -6,10 +7,12 @@ init()
 // Event listener on Search Button
 $('#search-button').on('click', function () {
 
-    if ($('#search-input').val() === "") {
+    if ($('#search-input').val() === "" || $('#state-input option:selected').val() === "") {
+        $('#search-field').effect('shake')
         return
     } else {
         searchInputTerm = $('#search-input').val().trim().toLowerCase()
+        stateInput = $('#state-input option:selected').val()
     }
 
     getCoordinates()
@@ -20,7 +23,10 @@ $('#search-button').on('click', function () {
 
 function getCoordinates() {
 
-    var queryURLGeo = "https://us1.locationiq.com/v1/search.php?key=5506fbb5d84090&q=" + searchInputTerm + "&format=json";
+    var queryURLGeo = "https://us1.locationiq.com/v1/search.php?key=5506fbb5d84090"
+        + "&city=" + searchInputTerm
+        + "&state=" + stateInput
+        + "&format=json"
 
     $.ajax({
         url: queryURLGeo,
@@ -65,7 +71,7 @@ function getSeismicData(lat, lon) {
         // reset seismic boxes
         resetSeismicBoxes()
 
-        $('#near').html('<p>Search Results For ' + searchInputTerm + '</p>')
+        $('#near').html('<p>Search Results for ' + searchInputTerm + '</p>')
 
         let dataArray = response.features
 
