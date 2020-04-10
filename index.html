@@ -21,16 +21,72 @@
     <main class="container" id="wrapper">
         <section id="search-container" class="centered">
             <div class="has-text-centered">
-                <label class="is-size-5">Enter A Location</label>
-                <div class="field has-addons is-marginless">
+                <label class="is-size-5">Enter a Location</label>
+                <div class="field has-addons is-marginless" id="search-field">
                     <p class="control">
-                        <input type="text" id="search-input" class="city-input input is-info">
+                        <input type="text" id="search-input" class="city-input input is-info" placeholder="Enter a city">
                     </p>
-                    <p class="control"><button id="search-button" type="submit" class="button is-danger"><i
-                                class="fas fa-search"></i></button>
+                    <div class="select">
+                        <select id="state-input">
+                            <option value="" selected="selected">Select a State</option>
+                            <option value="AL">AL</option>
+                            <option value="AK">AL</option>
+                            <option value="AZ">AZ</option>
+                            <option value="AR">AR</option>
+                            <option value="AS">AS</option>
+                            <option value="CA">CA</option>
+                            <option value="CO">CO</option>
+                            <option value="CT">CT</option>
+                            <option value="DE">DE</option>
+                            <option value="DC">DC</option>
+                            <option value="FL">FL</option>
+                            <option value="GA">GA</option>
+                            <option value="HI">HI</option>
+                            <option value="ID">ID</option>
+                            <option value="IL">IL</option>
+                            <option value="IN">IN</option>
+                            <option value="IA">IA</option>
+                            <option value="KS">KS</option>
+                            <option value="KY">KY</option>
+                            <option value="LA">LA</option>
+                            <option value="ME">ME</option>
+                            <option value="MD">MD</option>
+                            <option value="MA">MA</option>
+                            <option value="MI">MI</option>
+                            <option value="MN">MN</option>
+                            <option value="MS">MS</option>
+                            <option value="MO">MO</option>
+                            <option value="MT">MT</option>
+                            <option value="NE">NE</option>
+                            <option value="NV">NV</option>
+                            <option value="NH">NH</option>
+                            <option value="NJ">NJ</option>
+                            <option value="NM">NM</option>
+                            <option value="NY">NY</option>
+                            <option value="NC">NC</option>
+                            <option value="ND">ND</option>
+                            <option value="OH">OH</option>
+                            <option value="OK">OK</option>
+                            <option value="OR">OR</option>
+                            <option value="PA">PA</option>
+                            <option value="RI">RI</option>
+                            <option value="SC">SC</option>
+                            <option value="SD">SD</option>
+                            <option value="TN">TN</option>
+                            <option value="TX">TX</option>
+                            <option value="UT">UT</option>
+                            <option value="VT">VT</option>
+                            <option value="VA">VA</option>
+                            <option value="WA">WA</option>
+                            <option value="WV">WV</option>
+                            <option value="WI">WI</option>
+                            <option value="WY">WY</option>
+                        </select>
+                      </div>
+                    <p class="control"><button id="search-button" type="submit" class="button is-danger"><i class="fas fa-search"></i></button>
                     </p>
                 </div>
-                <p class="search-helper has-text-left">*City, State</p>
+                <p class="search-helper has-text-left is-italic">Please enter a valid city and state</p>
             </div>
         </section>
         <div id="near" class="subtitle has-text-centered"></div>
@@ -119,6 +175,7 @@
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="./Assets/script.js"></script>
 </body>
