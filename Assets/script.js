@@ -61,17 +61,11 @@ function getSeismicData(lat, lon) {
         url: queryURLUSGS,
         method: "GET"
     }).then(function (response) {
-
-        console.log("USGS :");
-        console.log(response);
-        //set mag variable
-        magnitude = response.features[0].properties.mag;
-        //set actual date & time
-
+        console.log(response)
         // reset seismic boxes
         resetSeismicBoxes()
 
-        $('#near').html('<p>Near ' + searchInputTerm + '</p>')
+        $('#near').html('<p>Search Results For ' + searchInputTerm + '</p>')
 
         let dataArray = response.features
 
@@ -119,6 +113,7 @@ function init() {
     if (parsedLocation != null) {
         searchInputTerm = parsedLocation
         getCoordinates()
+        getNewsArticles()
     } else {
         searchInputTerm = ""
     }
@@ -143,9 +138,9 @@ function getNewsArticles() {
     var countryCode = "us"; //get country code from USGS response
     var searchTerm = searchInputTerm.replace(/ /g, "+");
     var queryURLNewsAPI = "https://newsapi.org/v2/everything"
-    +"?q=earthquake+"+searchTerm
-    +"&apiKey="+apikey;
-    
+        + "?q=earthquake+" + searchTerm
+        + "&apiKey=" + apikey;
+
     console.log(queryURLNewsAPI)
     console.log(searchTerm)
 
@@ -165,9 +160,9 @@ function getNewsArticles() {
             var source = response.articles[i].source.name;
             var content = response.articles[i].description;
 
-            $("#title"+i).text(headline);
-            $("#date"+i).text(date+" - "+source);
-            $("#content"+i).text(content);
+            $("#title" + i).text(headline);
+            $("#date" + i).text(date + " - " + source);
+            $("#content" + i).text(content);
         }
 
     }).catch(function (error) {
