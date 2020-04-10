@@ -13,7 +13,7 @@ $('#search-button').on('click', function () {
     }
 
     getCoordinates()
-    getNewsArticles();
+    // getNewsArticles();
     storeLocation()
 
 })
@@ -61,47 +61,53 @@ function getSeismicData(lat, lon) {
         url: queryURLUSGS,
         method: "GET"
     }).then(function (response) {
-
-        console.log("USGS :");
-        console.log(response);
-        //set mag variable
-        magnitude = response.features[0].properties.mag;
-        //set actual date & time
-
         // reset seismic boxes
         resetSeismicBoxes()
 
         $('#near').html('<p>Near ' + searchInputTerm + '</p>')
 
         let dataArray = response.features
+        console.log(dataArray)
+        let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+        let newSeismicSubDiv = $('<div>').addClass('seismic-info')
+        let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
+        let newSeismicPDate = $('<p>').addClass('date content is-size-6')
+        let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
 
-        for (let i = 0; i < dataArray.length; i++) {
+        if (dataArray.length > 0) {
 
-            let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
-            let newSeismicSubDiv = $('<div>').addClass('seismic-info')
-            let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
-            let newSeismicPDate = $('<p>').addClass('date content is-size-6')
-            let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
-            let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
+            for (let i = 0; i < dataArray.length; i++) {
+                let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
 
-            // Color code event box based on magnitude value
-            if (response.features[i].properties.mag >= 7.0) {
-                newSeismicDiv.addClass("activity-high");
-            } else if (response.features[i].properties.mag >= 5.0 && response.features[i].properties.mag < 7.0) {
-                newSeismicDiv.addClass("activity-med");
-            } else if (response.features[i].properties.mag < 5.0) {
-                newSeismicDiv.addClass("activity-low");
-            };
+                // Color code event box based on magnitude value
+                if (response.features[i].properties.mag >= 7.0) {
+                    newSeismicDiv.addClass("activity-high");
+                } else if (response.features[i].properties.mag >= 5.0 && response.features[i].properties.mag < 7.0) {
+                    newSeismicDiv.addClass("activity-med");
+                } else if (response.features[i].properties.mag < 5.0) {
+                    newSeismicDiv.addClass("activity-low");
+                };
 
-            newSeismicH4.text(response.features[i].properties.place)
+                newSeismicH4.text(response.features[i].properties.place)
+                newSeismicSubDiv.append(newSeismicH4)
+
+                newSeismicPDate.text(eventTime)
+                newSeismicSubDiv.append(newSeismicPDate)
+
+                newSeismicDiv.append(newSeismicSubDiv)
+
+                newSeismicH5.text(response.features[i].properties.mag)
+                newSeismicDiv.append(newSeismicH5)
+
+                $('#seismic-container').append(newSeismicDiv)
+            }
+        } else {
+            console.log('No hit in array')
+            newSeismicH4.text('No Recent Activity Found')
             newSeismicSubDiv.append(newSeismicH4)
-
-            newSeismicPDate.text(eventTime)
-            newSeismicSubDiv.append(newSeismicPDate)
+            newSeismicH5.text('-.--')
 
             newSeismicDiv.append(newSeismicSubDiv)
-
-            newSeismicH5.text(response.features[i].properties.mag)
             newSeismicDiv.append(newSeismicH5)
 
             $('#seismic-container').append(newSeismicDiv)
@@ -119,6 +125,7 @@ function init() {
     if (parsedLocation != null) {
         searchInputTerm = parsedLocation
         getCoordinates()
+        // getNewsArticles()
     } else {
         searchInputTerm = ""
     }
@@ -143,9 +150,9 @@ function getNewsArticles() {
     var countryCode = "us"; //get country code from USGS response
     var searchTerm = searchInputTerm.replace(/ /g, "+");
     var queryURLNewsAPI = "https://newsapi.org/v2/everything"
-    +"?q=earthquake+"+searchTerm
-    +"&apiKey="+apikey;
-    
+        + "?q=earthquake+" + searchTerm
+        + "&apiKey=" + apikey;
+
     console.log(queryURLNewsAPI)
     console.log(searchTerm)
 
@@ -165,9 +172,9 @@ function getNewsArticles() {
             var source = response.articles[i].source.name;
             var content = response.articles[i].description;
 
-            $("#title"+i).text(headline);
-            $("#date"+i).text(date+" - "+source);
-            $("#content"+i).text(content);
+            $("#title" + i).text(headline);
+            $("#date" + i).text(date + " - " + source);
+            $("#content" + i).text(content);
         }
 
     }).catch(function (error) {
