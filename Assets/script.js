@@ -13,7 +13,7 @@ $('#search-button').on('click', function () {
     }
 
     getCoordinates()
-    // getNewsArticles();
+    getNewsArticles();
     storeLocation()
 
 })
@@ -67,7 +67,7 @@ function getSeismicData(lat, lon) {
         $('#near').html('<p>Near ' + searchInputTerm + '</p>')
 
         let dataArray = response.features
-        console.log(dataArray)
+
         let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
         let newSeismicSubDiv = $('<div>').addClass('seismic-info')
         let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
@@ -102,7 +102,6 @@ function getSeismicData(lat, lon) {
                 $('#seismic-container').append(newSeismicDiv)
             }
         } else {
-            console.log('No hit in array')
             newSeismicH4.text('No Recent Activity Found')
             newSeismicSubDiv.append(newSeismicH4)
             newSeismicH5.text('-.--')
@@ -125,7 +124,7 @@ function init() {
     if (parsedLocation != null) {
         searchInputTerm = parsedLocation
         getCoordinates()
-        // getNewsArticles()
+        getNewsArticles()
     } else {
         searchInputTerm = ""
     }
@@ -153,7 +152,6 @@ function getNewsArticles() {
         + "?q=earthquake+" + searchTerm
         + "&apiKey=" + apikey;
 
-    console.log(queryURLNewsAPI)
     console.log(searchTerm)
 
 
@@ -179,9 +177,9 @@ function getNewsArticles() {
 
     }).catch(function (error) {
         console.log(error)
+
     });
 }
 
 // Auto-update copyright year
 $("#copyright-year").text(moment().format("YYYY"))
-
