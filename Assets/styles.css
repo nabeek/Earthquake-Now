@@ -75,7 +75,8 @@ section#related-news {
     margin-bottom: 20px;
 }
 
-#search-button {
+/* Search Input Styling */
+#search-button, #state-selector {
     margin-left: 10px;
 }
 
