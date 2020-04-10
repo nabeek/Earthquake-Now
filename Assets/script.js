@@ -113,6 +113,7 @@ function init() {
     if (parsedLocation != null) {
         searchInputTerm = parsedLocation
         getCoordinates()
+        getNewsArticles()
     } else {
         searchInputTerm = ""
     }
