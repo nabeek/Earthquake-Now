@@ -24,7 +24,8 @@
                 <label class="is-size-5">Enter a Location</label>
                 <div class="field has-addons is-marginless" id="search-field">
                     <p class="control">
-                        <input type="text" id="search-input" class="city-input input is-info" placeholder="Enter a city">
+                        <input type="text" id="search-input" class="city-input input is-info"
+                            placeholder="Enter a city">
                     </p>
                     <div class="select">
                         <select id="state-input">
@@ -82,8 +83,9 @@
                             <option value="WI">WI</option>
                             <option value="WY">WY</option>
                         </select>
-                      </div>
-                    <p class="control"><button id="search-button" type="submit" class="button is-danger"><i class="fas fa-search"></i></button>
+                    </div>
+                    <p class="control"><button id="search-button" type="submit" class="button is-danger"><i
+                                class="fas fa-search"></i></button>
                     </p>
                 </div>
                 <p class="search-helper has-text-left is-italic">Please enter a valid city and state</p>
@@ -91,74 +93,51 @@
         </section>
         <div id="near" class="subtitle has-text-centered"></div>
 
+        <!-- Welcome Content -->
+        <div id="welcome">
+            <h2 class="title has-text-centered">Please Enter A Search Location Above</h2>
+        </div>
         <!-- Wrapper to create columns on desktop -->
-        <div class="columns is-desktop">
-            <!-- Recent Seismic Section -->
-            <section id="seismic-activity" class="section column">
-                <h3 class="title is-4 has-text-centered">Recent Seismic Activity</h3>
+        <div id="initialState" class="hide">
+            <div class="columns is-desktop">
+                <!-- Recent Seismic Section -->
+                <section id="seismic-activity" class="section column">
+                    <h3 class="title is-4 has-text-centered">Recent Seismic Activity</h3>
 
-                <div id="seismic-container" class="box-container">
-                    <!-- <div class="box activity-box activity-high is-flex">
-                        <div class="seismic-info">
-                            <h4 class="city-name title is-4">City Name 1</h4>
-                            <p class="date content is-size-6">72km WSW of Challis, Idaho</p>
-                            <p class="date content is-size-6">3/31/2020 12:25 AM</p>
+                    <div id="seismic-container" class="box-container"></div>
+                </section>
+                <!-- Recent News Section -->
+                <section class="section column" id="related-news">
+                    <div class="box-container">
+                        <h4 class="title is-4 has-text-white has-text-centered" id="news-section-header">Related News
+                        </h4>
+
+                        <div class="box news-box">
+                            <h5 class="title is-5" id="title0"></h5>
+                            <h6 class="date is-size-7" id="date0"></h6>
+                            <span class="content" id="content0" maxlength="20"></span>
+                            <sspanan class="is-italic has-text-link"> <a>Read more</a></span>
                         </div>
-                        <h5 class="magnitude content is-size-2">5.8</h5>
-                    </div>
-                    <div class="box activity-box activity-med is-flex">
-                        <div class="seismic-info">
-                            <h4 class="city-name title is-4">City Name 2</h4>
-                            <p class="date content is-size-6">4/01/2020 12:25 AM</p>
+
+
+                        <div class="box news-box">
+                            <h5 class="title is-5" id="title1"></h5>
+                            <h6 class="date is-size-7" id="date1"></h6>
+                            <span class="content" id="content1" maxlength="20"></span><span
+                                class="is-italic has-text-link">
+                                <a>Read more</a></span>
                         </div>
-                        <p class="magnitude content is-size-2">4.5</p>
-                    </div>
-                    <div class="box activity-box activity-low is-flex">
-                        <div class="seismic-info">
-                            <h4 class="city-name title is-4">City Name 3</h4>
-                            <p class="date content is-size-6">4/02/2020 12:25 AM</p>
+
+                        <div class="box news-box">
+                            <h5 class="title is-5" id="title2"></h5>
+                            <h6 class="date is-size-7" id="date2"></h6>
+                            <span class="content" id="content2" maxlength="20"></span><span
+                                class="is-italic has-text-link">
+                                <a>Read more</a></span>
                         </div>
-                        <p class="magnitude content is-size-2">3.8</p>
                     </div>
-                    <div class="box activity-box activity-high is-flex">
-                        <div class="seismic-info">
-                            <h4 class="city-name title is-4">City Name 4</h4>
-                            <p class="date content is-size-6">4/03/2020 12:25 AM</p>
-                        </div>
-                        <p class="magnitude content is-size-2">2.4</p>
-                    </div> -->
-                </div>
-            </section>
-            <!-- Recent News Section -->
-            <section class="section column" id="related-news">
-                <div class="box-container">
-                    <h4 class="title is-4 has-text-white has-text-centered" id="news-section-header">Related News</h4>
-
-                    <div class="box news-box">
-                        <h5 class="title is-5" id="title0"></h5>
-                        <h6 class="date is-size-7" id="date0"></h6>
-                        <span class="content" id="content0" maxlength="20"></span>
-                        <sspanan class="is-italic has-text-link"> <a>Read more</a></span>
-                    </div>
-
-
-                    <div class="box news-box">
-                        <h5 class="title is-5" id="title1"></h5>
-                        <h6 class="date is-size-7" id="date1"></h6>
-                        <span class="content" id="content1" maxlength="20"></span><span class="is-italic has-text-link">
-                            <a>Read more</a></span>
-                    </div>
-
-                    <div class="box news-box">
-                        <h5 class="title is-5" id="title2"></h5>
-                        <h6 class="date is-size-7" id="date2"></h6>
-                        <span class="content" id="content2" maxlength="20"></span><span class="is-italic has-text-link">
-                            <a>Read more</a></span>
-                    </div>
-
-
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
     </main>
 
@@ -176,7 +155,8 @@
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="./Assets/script.js"></script>
 </body>

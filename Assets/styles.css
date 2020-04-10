@@ -10,6 +10,11 @@ body {
     margin-bottom: 48px;
 }
 
+/* Hide Sections */
+.hide {
+    display: none;
+}
+
 /* Header-specfic styling */
 
 header {
@@ -17,6 +22,11 @@ header {
     max-width: 1368px;
     padding: 1em;
     width: 100%;
+}
+
+/* Welcome Content */
+#welcome {
+    margin-top: 5em;
 }
 
 /* Recent Seismic Section */
