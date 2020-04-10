@@ -80,11 +80,50 @@ function getSeismicData(lat, lon) {
 
         let dataArray = response.features
 
-        let newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
-        let newSeismicSubDiv = $('<div>').addClass('seismic-info')
-        let newSeismicH4 = $('<h4>').addClass('city-name title is-4')
-        let newSeismicPDate = $('<p>').addClass('date content is-size-6')
-        let newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
+        let newSeismicDiv, newSeismicSubDiv, newSeismicH4, newSeismicPDate, newSeismicH5
+
+        if (dataArray.length > 0) {
+
+            for (let j = 0; j < dataArray.length; j++) {
+                newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+                newSeismicSubDiv = $('<div>').addClass('seismic-info')
+                newSeismicH4 = $('<h4>').addClass('city-name title is-4')
+                newSeismicPDate = $('<p>').addClass('date content is-size-6')
+                newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
+                eventTime = moment(response.features[j].properties.time).format('MMMM Do, YYYY h:mm a')
+
+                // Color code event box based on magnitude value
+                if (response.features[j].properties.mag >= 7.0) {
+                    newSeismicDiv.addClass("activity-high");
+                } else if (response.features[j].properties.mag >= 5.0 && response.features[j].properties.mag < 7.0) {
+                    newSeismicDiv.addClass("activity-med");
+                } else if (response.features[j].properties.mag < 5.0) {
+                    newSeismicDiv.addClass("activity-low");
+                };
+
+                newSeismicH4.text(response.features[j].properties.place)
+                newSeismicSubDiv.append(newSeismicH4)
+
+                newSeismicPDate.text(eventTime)
+                newSeismicSubDiv.append(newSeismicPDate)
+
+                newSeismicDiv.append(newSeismicSubDiv)
+
+                newSeismicH5.text(response.features[j].properties.mag)
+                newSeismicDiv.append(newSeismicH5)
+
+                $('#seismic-container').append(newSeismicDiv)
+            }
+        } else {
+            newSeismicH4.text('No Recent Activity Found')
+            newSeismicSubDiv.append(newSeismicH4)
+            newSeismicH5.text('-.--')
+
+            newSeismicDiv.append(newSeismicSubDiv)
+            newSeismicDiv.append(newSeismicH5)
+
+            $('#seismic-container').append(newSeismicDiv)
+        }
 
         for (let i = 0; i < dataArray.length; i++) {
 
@@ -105,43 +144,6 @@ function getSeismicData(lat, lon) {
             newSeismicSubDiv.append(newSeismicH4)
         }
 
-        if (dataArray.length > 0) {
-
-            for (let i = 0; i < dataArray.length; i++) {
-                let eventTime = moment(response.features[i].properties.time).format('MMMM Do, YYYY h:mm a')
-
-                // Color code event box based on magnitude value
-                if (response.features[i].properties.mag >= 7.0) {
-                    newSeismicDiv.addClass("activity-high");
-                } else if (response.features[i].properties.mag >= 5.0 && response.features[i].properties.mag < 7.0) {
-                    newSeismicDiv.addClass("activity-med");
-                } else if (response.features[i].properties.mag < 5.0) {
-                    newSeismicDiv.addClass("activity-low");
-                };
-
-                newSeismicH4.text(response.features[i].properties.place)
-                newSeismicSubDiv.append(newSeismicH4)
-
-                newSeismicPDate.text(eventTime)
-                newSeismicSubDiv.append(newSeismicPDate)
-
-                newSeismicDiv.append(newSeismicSubDiv)
-
-                newSeismicH5.text(response.features[i].properties.mag)
-                newSeismicDiv.append(newSeismicH5)
-
-                $('#seismic-container').append(newSeismicDiv)
-            }
-        } else {
-            newSeismicH4.text('No Recent Activity Found')
-            newSeismicSubDiv.append(newSeismicH4)
-            newSeismicH5.text('-.--')
-
-            newSeismicDiv.append(newSeismicSubDiv)
-            newSeismicDiv.append(newSeismicH5)
-
-            $('#seismic-container').append(newSeismicDiv)
-        }
     }).catch(function (error) {
         console.log(error)
     });
