@@ -75,9 +75,9 @@ section#related-news {
     margin-bottom: 20px;
 }
 
+/* Search Input Styling */
 #search-button {
     border-radius: 4px;
-    margin-left: 10px;
 }
 
 .city-input {

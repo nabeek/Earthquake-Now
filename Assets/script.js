@@ -20,6 +20,12 @@ $('#search-button').on('click', function () {
     storeLocation()
 
 })
+//search with ENTER
+$("#search-input").on("keyup", function(event) {
+    if (event.keyCode === 13) {
+        $("#search-button").click();
+    }
+})
 
 function getCoordinates() {
 
@@ -162,7 +168,6 @@ function getNewsArticles() {
 
         //print articles to HTML
         for (var i = 0; i < 3; i++) {
-            console.log(response.articles[i])
             var headline = response.articles[i].title;
             var date = moment(response.articles[i].publishedAt).calendar();
             var source = response.articles[i].source.name;
@@ -179,6 +184,7 @@ function getNewsArticles() {
 }
 
 // Auto-update copyright year
+
 $("#copyright-year").text(moment().format("YYYY"))
 
 
