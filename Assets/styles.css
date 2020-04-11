@@ -24,6 +24,10 @@ header {
     width: 100%;
 }
 
+#wrapper {
+    padding: 1em;
+}
+
 /* Welcome Content */
 #welcome {
     margin-top: 5em;
