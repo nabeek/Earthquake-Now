@@ -49,6 +49,15 @@ header {
     width: 30%;
 }
 
+.activity-non {
+    background-color: #2D4059;
+    color: #ebebeb;
+}
+
+.activity-non h4 {
+    color: #ebebeb;
+}
+
 .activity-high {
     background-color: #ea5455;
 }

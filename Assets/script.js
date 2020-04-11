@@ -97,7 +97,7 @@ function getSeismicData(lat, lon) {
         if (dataArray.length > 0) {
 
             for (let i = 0; i < dataArray.length; i++) {
-                newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+                newSeismicDiv = $('<div>').addClass('box activity-box is-flex')
                 newSeismicSubDiv = $('<div>').addClass('seismic-info')
                 newSeismicH4 = $('<h4>').addClass('city-name title is-4')
                 newSeismicPDate = $('<p>').addClass('date content is-size-6')
@@ -136,7 +136,7 @@ function getSeismicData(lat, lon) {
 
             }
         } else {
-            newSeismicDiv = $('<div>').addClass('box activity-box activity-high is-flex')
+            newSeismicDiv = $('<div>').addClass('box activity-box activity-non is-flex')
             newSeismicSubDiv = $('<div>').addClass('seismic-info')
             newSeismicH4 = $('<h4>').addClass('city-name title is-4')
             newSeismicH5 = $('<h5>').addClass('magnitude content is-size-2')
@@ -167,7 +167,7 @@ function show(el) {
 function getNewsArticles() {
     var apikey = "471254efa5b94cdd9aa11434a2d472f4";
     var countryCode = "us"; //get country code from USGS response
-    var searchTerm = cityInput.replace(/ /g, "+") +",+"+ stateInput.replace(/ /g, "+");
+    var searchTerm = cityInput.replace(/ /g, "+") + ",+" + stateInput.replace(/ /g, "+");
     var queryURLNewsAPI = "https://newsapi.org/v2/everything"
         + "?q='earthquake'+AND+" + searchTerm
         + "&language=en"
