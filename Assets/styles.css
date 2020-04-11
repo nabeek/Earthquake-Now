@@ -5,9 +5,28 @@ body {
     flex-direction: column;
 }
     
-  #wrapper {
+#wrapper {
     flex: 1;
     margin-bottom: 48px;
+}
+
+/* Hide Sections */
+.hide {
+    display: none;
+}
+
+/* Header-specfic styling */
+
+header {
+    margin: auto;
+    max-width: 1368px;
+    padding: 1em;
+    width: 100%;
+}
+
+/* Welcome Content */
+#welcome {
+    margin-top: 5em;
 }
 
 /* Recent Seismic Section */
@@ -16,14 +35,27 @@ body {
     border: 1px solid #2d4059;
 }
 
+#near p {
+    text-transform: capitalize;
+}
+
 .seismic-info {
-    width: 50%;
+    width: 70%;
 }
 
 .magnitude {
     align-self: center;
     text-align: right;
-    width: 50%;
+    width: 30%;
+}
+
+.activity-non {
+    background-color: #2D4059;
+    color: #ebebeb;
+}
+
+.activity-non h4 {
+    color: #ebebeb;
 }
 
 .activity-high {
@@ -47,6 +79,10 @@ section#related-news {
     background-color: #FFF6EF;
 }
 
+.date {
+    margin-bottom: 10px;
+}
+
 .navbar {
     background: #2D4059;
 }
@@ -58,12 +94,21 @@ section#related-news {
     margin-bottom: 20px;
 }
 
+/* Search Input Styling */
 #search-button {
-    margin-left: 10px;
+    border-radius: 4px;
+    margin-left: 14px;
 }
 
 .city-input {
     background-color: #ebebeb;
+}
+
+#state-input {
+    background-color: #ebebeb;
+    border-color: #3298dc;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
 
 .search-helper {
@@ -72,7 +117,11 @@ section#related-news {
     color: grey;
 }
 
+/* Footer-specific styling */
 .footer {
     background-color: #ebebeb;
+    margin: auto;
+    max-width: 1368px;
     padding: 3rem 1.5rem 3rem;
+    width: 100%;
 }
