@@ -159,7 +159,7 @@ function getSeismicData(lat, lon) {
 function getNewsArticles() {
     var apikey = "471254efa5b94cdd9aa11434a2d472f4";
     var countryCode = "us"; //get country code from USGS response
-    var searchTerm = searchInputTerm.replace(/ /g, "+");
+    var searchTerm = searchInputTerm.replace(/ /g, "+") +",+"+ stateInput.replace(/ /g, "+");
     var queryURLNewsAPI = "https://newsapi.org/v2/everything"
         + "?q=earthquake+AND+" + searchTerm
         + "&apiKey=" + apikey;
