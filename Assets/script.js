@@ -64,7 +64,7 @@ function getSeismicData(lat, lon) {
     //get lat from geocode
     var latitude = lat;
 
-    var maxRadiuskm = 180;
+    var maxRadiuskm = 160;
     var magnitude = "";
     var minMag = 3;
     var limit = 5;
