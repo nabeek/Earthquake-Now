@@ -192,7 +192,8 @@ function getNewsArticles() {
                 newNewsTitle = $('<h5>').addClass("title is-5").attr("id", "title"+i)
                 newNewsDate = $('<h6>').addClass("date is-size-7").attr("id", "date"+i)
                 newNewsContent = $("<span>").addClass("content").attr("id", "content"+i)
-                newNewsLink = $("<span>").addClass("is-italic has-text-link").attr("id", "read-more-"+i).attr("href", readMore).attr("target", "_blank")
+                newNewsLink = $("<span>").addClass("is-italic has-text-link").attr("id", "read-more-"+i)
+                newNewsReadMore = $("<a>").attr("href", readMore).attr("target", "_blank")
 
                 newNewsTitle.text(headline)
                 newNewsDiv.append(newNewsTitle)
@@ -203,10 +204,20 @@ function getNewsArticles() {
                 newNewsContent.text(content)
                 newNewsDiv.append(newNewsContent)
 
+                newNewsReadMore.text(" Read more")
+                newNewsLink.append(newNewsReadMore)
                 newNewsDiv.append(newNewsLink)
 
                 $('#news-container').append(newNewsDiv)
             }
+        } else {
+                newNewsDiv = $('<div>').addClass("box news-box").attr("id", "news-box-0")
+                newNewsTitle = $('<h5>').addClass("title is-5").attr("id", "title0")
+
+                newNewsTitle.text("There is no recent news for this location")
+                newNewsDiv.append(newNewsTitle)
+
+                $('#news-container').append(newNewsDiv)                
         }
 
     }).catch(function (error) {
