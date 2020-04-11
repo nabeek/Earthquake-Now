@@ -192,9 +192,9 @@ function getNewsArticles() {
 function init() {
     let storedLocation = localStorage.getItem('searchLocation')
     let parsedLocation = JSON.parse(storedLocation)
-
     if (parsedLocation != null) {
-        searchInputTerm = parsedLocation
+        searchInputTerm = parsedLocation[0]
+        stateInput = parsedLocation[1]
         changeLayout()
         getCoordinates()
         getNewsArticles()
@@ -205,7 +205,8 @@ function init() {
 
 // save search to local storage
 function storeLocation() {
-    localStorage.setItem('searchLocation', JSON.stringify(searchInputTerm))
+    let cityState = new Array(searchInputTerm, stateInput)
+    localStorage.setItem('searchLocation', JSON.stringify(cityState))
 }
 
 function changeLayout() {
