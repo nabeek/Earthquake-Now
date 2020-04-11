@@ -1,4 +1,4 @@
-let searchInputTerm = ""
+let cityInput = ""
 let stateInput = ""
 let searchLocation = ""
 
@@ -11,7 +11,7 @@ $('#search-button').on('click', function () {
         $('#search-field').effect('shake')
         return
     } else {
-        searchInputTerm = $('#search-input').val().trim().toLowerCase()
+        cityInput = $('#search-input').val().trim().toLowerCase()
         stateInput = $('#state-input option:selected').val()
     }
 
@@ -38,7 +38,7 @@ $("#state-input").on("keyup", function (event) {
 function getCoordinates() {
 
     var queryURLGeo = "https://us1.locationiq.com/v1/search.php?key=5506fbb5d84090"
-        + "&city=" + searchInputTerm
+        + "&city=" + cityInput
         + "&state=" + stateInput
         + "&format=json"
 
@@ -64,7 +64,7 @@ function getSeismicData(lat, lon) {
     //get lat from geocode
     var latitude = lat;
 
-    var maxRadiuskm = 180;
+    var maxRadiuskm = 160;
     var magnitude = "";
     var minMag = 3;
     var limit = 5;
@@ -84,7 +84,7 @@ function getSeismicData(lat, lon) {
         // reset seismic boxes
         resetSeismicBoxes()
 
-        $('#near').html('<p>Search Results for ' + searchInputTerm + ', ' + stateInput + '</p>')
+        $('#near').html('<p>Search Results for ' + cityInput + ', ' + stateInput + '</p>')
 
         let dataArray = response.features
 
@@ -155,34 +155,56 @@ function getSeismicData(lat, lon) {
     });
 }
 
+function hide(el) {
+    $(el).addClass("hide");
+}
+
 //get news articles API
 function getNewsArticles() {
     var apikey = "471254efa5b94cdd9aa11434a2d472f4";
     var countryCode = "us"; //get country code from USGS response
-    var searchTerm = searchInputTerm.replace(/ /g, "+");
+    var searchTerm = cityInput.replace(/ /g, "+") +",+"+ stateInput.replace(/ /g, "+");
     var queryURLNewsAPI = "https://newsapi.org/v2/everything"
-        + "?q=earthquake+" + searchTerm
+        + "?q='earthquake'+AND+" + searchTerm
         + "&apiKey=" + apikey;
+
+        console.log(queryURLNewsAPI)
 
     $.ajax({
         url: queryURLNewsAPI,
         method: "GET"
     }).then(function (response) {
-        console.log("NewsAPI :");
-        console.log(response);
+        console.log(response)
+        if (response.totalResults === 0) {
+            hide(".news-box");
+            hide("#read-more-0");
+            hide("#date0");
+            hide("#content0");
+            $("#news-box-0").removeClass("hide");
+            $("#news-box-0 h5").text("No Recent News");
+        } else if (response.totalResults < 3) {
+            hide(".news-box");
+            $("#news-box-0").removeClass("hide");
+            printArticles();
+        } else {
+            $(".news-box").removeClass("hide");
+            for (var i = 0; i < 3; i++) {
+                printArticles();
+            } 
+        }
 
-        //print articles to HTML
-        for (var i = 0; i < 3; i++) {
+        function printArticles() {
             var headline = response.articles[i].title;
             var date = moment(response.articles[i].publishedAt).calendar();
             var source = response.articles[i].source.name;
             var content = response.articles[i].description;
+            var readMore = response.articles[i].url;
 
-            $("#title" + i).text(headline);
-            $("#date" + i).text(date + " - " + source);
-            $("#content" + i).text(content);
+            $("#title"+i).text(headline);
+            $("#date"+i).text(date + " - " + source);
+            $("#content"+i).text(content);
+            $("#read-more-"+i).attr("href", readMore);
         }
-
     }).catch(function (error) {
         console.log(error)
     });
@@ -193,19 +215,19 @@ function init() {
     let storedLocation = localStorage.getItem('searchLocation')
     let parsedLocation = JSON.parse(storedLocation)
     if (parsedLocation != null) {
-        searchInputTerm = parsedLocation[0]
+        cityInput = parsedLocation[0]
         stateInput = parsedLocation[1]
         changeLayout()
         getCoordinates()
         getNewsArticles()
     } else {
-        searchInputTerm = ""
+        cityInput = ""
     }
 }
 
 // save search to local storage
 function storeLocation() {
-    let cityState = new Array(searchInputTerm, stateInput)
+    let cityState = new Array(cityInput, stateInput)
     localStorage.setItem('searchLocation', JSON.stringify(cityState))
 }
 
