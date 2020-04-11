@@ -67,7 +67,7 @@ function getSeismicData(lat, lon) {
     var maxRadiuskm = 160;
     var magnitude = "";
     var minMag = 3;
-    var limit = 5;
+    var limit = 7;
 
     var queryURLUSGS = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson"
         + "&longitude=" + longitude
@@ -181,7 +181,7 @@ function getNewsArticles() {
         
         if (response.totalResults != 0) {
 
-            for (i = 0; i < 3; i++) {
+            for (i = 0; i < 4; i++) {
                 var headline = response.articles[i].title;
                 var date = moment(response.articles[i].publishedAt).calendar();
                 var source = response.articles[i].source.name;
