@@ -168,21 +168,36 @@ function getNewsArticles() {
         url: queryURLNewsAPI,
         method: "GET"
     }).then(function (response) {
-        console.log("NewsAPI :");
-        console.log(response);
+        if (response.totalResults === 0) {
+            hide(".news-box");
+            hide("#read-more-0");
+            hide("#date-0");
+            hide("#content-0");
+            $("#news-box-0").removeClass("hide");
+            $("#news-box-0 h5").text("No Recent News");
+        } else if (response.totalResults < 3) {
+            hide(".news-box");
+            $("#news-box-0").removeClass("hide");
+            printArticles();
+        } else {
+            $(".news-box").removeClass("hide");
+            for (var i = 0; i < 3; i++) {
+                printArticles();
+            } 
+        }
 
-        //print articles to HTML
-        for (var i = 0; i < 3; i++) {
+        function printArticles() {
             var headline = response.articles[i].title;
             var date = moment(response.articles[i].publishedAt).calendar();
             var source = response.articles[i].source.name;
             var content = response.articles[i].description;
+            var readMore = response.articles[i].url;
 
-            $("#title" + i).text(headline);
-            $("#date" + i).text(date + " - " + source);
-            $("#content" + i).text(content);
+            $("#title"+i).text(headline);
+            $("#date"+i).text(date + " - " + source);
+            $("#content"+i).text(content);
+            $("#read-more-"+i).attr("href", readMore);
         }
-
     }).catch(function (error) {
         console.log(error)
     });
