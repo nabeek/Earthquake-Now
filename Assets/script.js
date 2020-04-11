@@ -159,6 +159,10 @@ function hide(el) {
     $(el).addClass("hide");
 }
 
+function show(el) {
+    $(el).removeClass("hide");
+}
+
 //get news articles API
 function getNewsArticles() {
     var apikey = "471254efa5b94cdd9aa11434a2d472f4";
@@ -189,6 +193,10 @@ function getNewsArticles() {
         } else {
             $(".news-box").removeClass("hide");
             for (var i = 0; i < 3; i++) {
+                show(".news-box");
+                show("#read-more-0");
+                show("#date0");
+                show("#content0");
                 printArticles();
             } 
         }
