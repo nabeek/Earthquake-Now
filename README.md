@@ -2,7 +2,7 @@
 
 # Earthquake Now
 
-<img src="./Assets/img/Earthquake Now.png" alt="Earthquake Now Image" width="600px">
+<img src="./Assets/img/earthquake-now-full.png" alt="Earthquake Now Image" width="600px">
 
 > This application allows the user to quickly find up-to-date seismic data and related news articles for a specified location. This provides the user with valuable information to make informed decisions.
 
