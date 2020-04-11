@@ -155,6 +155,10 @@ function getSeismicData(lat, lon) {
     });
 }
 
+function hide(el) {
+    $(el).addClass("hide");
+}
+
 //get news articles API
 function getNewsArticles() {
     var apikey = "471254efa5b94cdd9aa11434a2d472f4";
