@@ -173,47 +173,42 @@ function getNewsArticles() {
         + "&language=en"
         + "&apiKey=" + apikey;
 
-        console.log(queryURLNewsAPI)
-
     $.ajax({
         url: queryURLNewsAPI,
         method: "GET"
     }).then(function (response) {
-        console.log(response)
-        if (response.totalResults === 0) {
-            hide(".news-box");
-            hide("#read-more-0");
-            hide("#date0");
-            hide("#content0");
-            $("#news-box-0").removeClass("hide");
-            $("#news-box-0 h5").text("No Recent News");
-        } else if (response.totalResults < 3) {
-            hide(".news-box");
-            $("#news-box-0").removeClass("hide");
-            printArticles();
-        } else {
-            $(".news-box").removeClass("hide");
-            for (var i = 0; i < 3; i++) {
-                show(".news-box");
-                show("#read-more-0");
-                show("#date0");
-                show("#content0");
-                printArticles();
-            } 
+        resetNewsBoxes()
+        
+        if (response.totalResults != 0) {
+
+            for (i = 0; i < 3; i++) {
+                var headline = response.articles[i].title;
+                var date = moment(response.articles[i].publishedAt).calendar();
+                var source = response.articles[i].source.name;
+                var content = response.articles[i].description;
+                var readMore = response.articles[i].url;
+                                
+                newNewsDiv = $('<div>').addClass("box news-box").attr("id", "news-box-"+i)
+                newNewsTitle = $('<h5>').addClass("title is-5").attr("id", "title"+i)
+                newNewsDate = $('<h6>').addClass("date is-size-7").attr("id", "date"+i)
+                newNewsContent = $("<span>").addClass("content").attr("id", "content"+i)
+                newNewsLink = $("<span>").addClass("is-italic has-text-link").attr("id", "read-more-"+i).attr("href", readMore).attr("target", "_blank")
+
+                newNewsTitle.text(headline)
+                newNewsDiv.append(newNewsTitle)
+
+                newNewsDate.text(date + " - " + source)
+                newNewsDiv.append(newNewsDate)
+
+                newNewsContent.text(content)
+                newNewsDiv.append(newNewsContent)
+
+                newNewsDiv.append(newNewsLink)
+
+                $('#news-container').append(newNewsDiv)
+            }
         }
 
-        function printArticles() {
-            var headline = response.articles[i].title;
-            var date = moment(response.articles[i].publishedAt).calendar();
-            var source = response.articles[i].source.name;
-            var content = response.articles[i].description;
-            var readMore = response.articles[i].url;
-
-            $("#title"+i).text(headline);
-            $("#date"+i).text(date + " - " + source);
-            $("#content"+i).text(content);
-            $("#read-more-"+i).attr("href", readMore);
-        }
     }).catch(function (error) {
         console.log(error)
     });
@@ -250,6 +245,12 @@ function resetSeismicBoxes() {
     if ($('#seismic-container').has('div')) {
         $('#seismic-container > div').remove()
         $('#near > p').remove()
+    }
+}
+// Reset news activity boxes
+function resetNewsBoxes() {
+    if ($('#news-container').has('div')) {
+        $('#news-container > div').remove()
     }
 }
 
