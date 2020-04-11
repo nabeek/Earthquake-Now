@@ -161,7 +161,7 @@ function getNewsArticles() {
     var countryCode = "us"; //get country code from USGS response
     var searchTerm = searchInputTerm.replace(/ /g, "+");
     var queryURLNewsAPI = "https://newsapi.org/v2/everything"
-        + "?q=earthquake+" + searchTerm
+        + "?q=earthquake+AND+" + searchTerm
         + "&apiKey=" + apikey;
 
     $.ajax({
