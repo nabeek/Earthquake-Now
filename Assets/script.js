@@ -170,6 +170,7 @@ function getNewsArticles() {
     var searchTerm = cityInput.replace(/ /g, "+") +",+"+ stateInput.replace(/ /g, "+");
     var queryURLNewsAPI = "https://newsapi.org/v2/everything"
         + "?q='earthquake'+AND+" + searchTerm
+        + "&language=en"
         + "&apiKey=" + apikey;
 
         console.log(queryURLNewsAPI)
