@@ -54,7 +54,7 @@ function getCoordinates() {
 
         getSeismicData(lat, lon)
     }).catch(function (error) {
-        console.log(error)
+        // console.log(error)
     })
 };
 
@@ -151,16 +151,8 @@ function getSeismicData(lat, lon) {
             $('#seismic-container').append(newSeismicDiv)
         }
     }).catch(function (error) {
-        console.log(error)
+        // console.log(error)
     });
-}
-
-function hide(el) {
-    $(el).addClass("hide");
-}
-
-function show(el) {
-    $(el).removeClass("hide");
 }
 
 //get news articles API
@@ -178,7 +170,7 @@ function getNewsArticles() {
         method: "GET"
     }).then(function (response) {
         resetNewsBoxes()
-        
+
         if (response.totalResults != 0) {
 
             for (i = 0; i < 4; i++) {
@@ -187,12 +179,12 @@ function getNewsArticles() {
                 var source = response.articles[i].source.name;
                 var content = response.articles[i].description;
                 var readMore = response.articles[i].url;
-                                
-                newNewsDiv = $('<div>').addClass("box news-box").attr("id", "news-box-"+i)
-                newNewsTitle = $('<h5>').addClass("title is-5").attr("id", "title"+i)
-                newNewsDate = $('<h6>').addClass("date is-size-7").attr("id", "date"+i)
-                newNewsContent = $("<span>").addClass("content").attr("id", "content"+i)
-                newNewsLink = $("<span>").addClass("is-italic has-text-link").attr("id", "read-more-"+i)
+
+                newNewsDiv = $('<div>').addClass("box news-box").attr("id", "news-box-" + i)
+                newNewsTitle = $('<h5>').addClass("title is-5").attr("id", "title" + i)
+                newNewsDate = $('<h6>').addClass("date is-size-7").attr("id", "date" + i)
+                newNewsContent = $("<span>").addClass("content").attr("id", "content" + i)
+                newNewsLink = $("<span>").addClass("is-italic has-text-link").attr("id", "read-more-" + i)
                 newNewsReadMore = $("<a>").attr("href", readMore).attr("target", "_blank")
 
                 newNewsTitle.text(headline)
@@ -211,17 +203,17 @@ function getNewsArticles() {
                 $('#news-container').append(newNewsDiv)
             }
         } else {
-                newNewsDiv = $('<div>').addClass("box news-box").attr("id", "news-box-0")
-                newNewsTitle = $('<h5>').addClass("title is-5").attr("id", "title0")
+            newNewsDiv = $('<div>').addClass("box news-box").attr("id", "news-box-0")
+            newNewsTitle = $('<h5>').addClass("title is-5").attr("id", "title0")
 
-                newNewsTitle.text("There is no recent news for this location")
-                newNewsDiv.append(newNewsTitle)
+            newNewsTitle.text("There is no recent news for this location")
+            newNewsDiv.append(newNewsTitle)
 
-                $('#news-container').append(newNewsDiv)                
+            $('#news-container').append(newNewsDiv)
         }
 
     }).catch(function (error) {
-        console.log(error)
+        // console.log(error)
     });
 }
 
